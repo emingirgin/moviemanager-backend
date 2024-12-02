@@ -8,12 +8,14 @@ const cors = require('cors');
 
 const startServer = async () => {
   const app = express();
+  const FRONTEND_URL = process.env.FRONTEND_URL;
+  const BACKEND_URL = process.env.BACKEND_URL;
   
   // Connect to MongoDB
   await connectDB();
 
   app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: FRONTEND_URL,
     credentials: false
   }));
 
@@ -40,7 +42,7 @@ const startServer = async () => {
   const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => {
     console.log(`🚀 PORT: ${PORT}`);
-    console.log(`🚀 GraphQL endpoint: http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀 GraphQL endpoint: http://${BACKEND_URL}:${PORT}${server.graphqlPath}`);
   });
 };
 
